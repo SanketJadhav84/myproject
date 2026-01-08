@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+
+    <h2>Register</h2>
+
+    <form method="POST" action="">
+        <div>
+            <label>Username</label><br>
+            <input type="text" name="username" required>
+        </div>
+
+        <div style="margin-top: 8px;">
+            <label>Email</label><br>
+            <input type="email" name="email" required>
+        </div>
+
+        <div style="margin-top: 8px;">
+            <label>Password</label><br>
+            <input type="password" name="password" required>
+        </div>
+
+        <div style="margin-top: 12px;">
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+
+    <p style="margin-top: 15px;">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EC2 Instances</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button.stop {
+            background-color: #dc3545;
+        }
+
+        /* Row / state coloring */
+        .running {
+            background-color: #d4edda;
+        }
+        .running td {
+            color: #155724;
+            font-weight: 600;
+        }
+
+        .stopped {
+            background-color: #f8d7da;
+        }
+        .stopped td {
+            color: #721c24;
+            font-weight: 600;
+        }
+
+        /* Flash message styles (use classes, not inline Jinja in CSS) */
+        .flash-container {
+            width: 90%;
+            margin: 20px auto;
+        }
+        .flash {
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            border: 1px solid transparent;
+        }
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .flash-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .flash-info {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            table { width: 100%; }
+            th, td { padding: 8px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>My EC2 Instances</h1>
+
+    <!-- FLASH MESSAGES (use classes to avoid inline Jinja in CSS) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash
+                {% if category == 'success' %}flash-success{% elif category == 'danger' %}flash-danger{% else %}flash-info{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <table>
+        <tr>
+            <th>Instance ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>State</th>
+            <th>Private IP</th>
+            <th>Launch Time</th>
+            <th>Action</th>
+        </tr>
+
+        {% for i in instances %}
+        <tr class="{% if i.state == 'running' %}running{% elif i.state == 'stopped' %}stopped{% endif %}">
+            <td>{{ i.instance_id }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.instance_type }}</td>
+            <td>{{ i.state }}</td>
+            <td>{{ i.private_ip }}</td>
+            <td>{{ i.launch_time }}</td>
+            <td>
+                {% if i.state == 'running' %}
+                    <form action="/instances/{{ i.instance_id }}/stop" method="post">
+                        <button class="stop">Stop</button>
+                    </form>
+                {% elif i.state == 'stopped' %}
+                    <form action="/instances/{{ i.instance_id }}/start" method="post">
+                        <button>Start</button>
+                    </form>
+                {% else %}
+                    <em>Pending</em>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
