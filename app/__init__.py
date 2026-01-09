@@ -14,14 +14,14 @@ def create_app():
 
     mysql.init_app(app)
 
-    # HOME
+   
     @app.route("/")
     def home():
         if 'user_id' in session:
             return redirect(url_for("instances"))
         return render_template("index.html")
 
-    # REGISTER (simple like old project)
+    
     @app.route("/register", methods=['GET', 'POST'])
     def register():
         if request.method == "POST":
@@ -50,7 +50,7 @@ def create_app():
 
         return render_template("register.html")
 
-    # LOGIN
+    
     @app.route("/login", methods=['GET', 'POST'])
     def login():
         if request.method == "POST":
@@ -73,14 +73,14 @@ def create_app():
 
         return render_template("login.html")
 
-    # LOGOUT
+    
     @app.route("/logout")
     def logout():
         session.clear()
         flash("Logged out!", "info")
         return redirect(url_for("login"))
 
-    # INSTANCE PAGE (protected)
+    
     @app.route("/instances")
     def instances():
         if 'user_id' not in session:
