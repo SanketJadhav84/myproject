@@ -33,7 +33,7 @@
             background-color: #f2f2f2;
         }
 
-        /* Buttons */
+        
         button {
             background-color: #007BFF;
             color: white;
@@ -46,7 +46,7 @@
             background-color: #dc3545;
         }
 
-        /* Row / state coloring */
+       
         .running {
             background-color: #d4edda;
         }
@@ -63,7 +63,7 @@
             font-weight: 600;
         }
 
-        /* Flash message styles (use classes, not inline Jinja in CSS) */
+        
         .flash-container {
             width: 90%;
             margin: 20px auto;
@@ -92,7 +92,6 @@
             border-color: #ffeeba;
         }
 
-        /* Responsive */
         @media (max-width: 800px) {
             table { width: 100%; }
             th, td { padding: 8px; font-size: 14px; }
@@ -103,7 +102,7 @@
     
     <h1>My EC2 Instances</h1>
 
-    <!-- FLASH MESSAGES (use classes to avoid inline Jinja in CSS) -->
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-container">
