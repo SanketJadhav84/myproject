@@ -1,0 +1,30 @@
+services:
+  webapp:
+    build: .
+    container_name: flaskcontainer
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: flaskuser
+      MYSQL_PASSWORD: flaskpass
+      MYSQL_DB: aws_project
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ap-south-1
+
+  db:
+    image: mysql:8.0
+    container_name: mysqlcontainer
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: aws_project
+      MYSQL_USER: flaskuser
+      MYSQL_PASSWORD: flaskpass
+
+volumes:
+  mysql_data:
