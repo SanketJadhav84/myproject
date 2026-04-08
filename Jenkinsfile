@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clean old container') {
-            steps {
-                sh 'docker rm -f myapp-container || true'
-            }
-        }
-
         stage('Clone Repository') {
             steps {
                 git 'https://github.com/SanketJadhav84/myproject.git'
