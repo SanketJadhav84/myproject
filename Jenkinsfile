@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/SanketJadhav84/myproject.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t myprojectimg .'
