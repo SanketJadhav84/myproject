@@ -3,6 +3,12 @@ pipeline {
 
     stages {
 
+        stage('Clean old container') {
+            steps {
+                sh 'docker rm -f myapp-container || true'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t myprojectimg .'
