@@ -6,6 +6,7 @@ pipeline {
         stage('Clean old container') {
             steps {
                 sh 'docker rm -f myapp-container || true'
+                sh 'docker system prune -f || true'
             }
         }
 
