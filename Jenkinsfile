@@ -18,7 +18,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 3000:8000 --name myapp-container myprojectimg'
+                sh 'docker compose up -d --build'
             }
         }
     }
